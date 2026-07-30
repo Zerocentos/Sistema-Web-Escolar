@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import sqlite3
 
-from model import DATABASE
+from model import BANCO_DE_DADOS
 
 app = Flask(__name__)
 

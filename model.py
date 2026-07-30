@@ -1,6 +1,6 @@
 import sqlite3
 
-DATABASE = "Sistema-Web-Escolar.bd"
+BANCO_DE_DADOS = "Sistema-Web-Escolar.bd"
 
 def criarBanco():
     print("Criando banco...")
