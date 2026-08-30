@@ -67,10 +67,10 @@ def aluno_curso() -> str:
 
 def aluno_materia() -> str: 
     query = '''
-    CREATE TABLE IF NOT EXISTS aluno_curso(
+    CREATE TABLE IF NOT EXISTS aluno_materia(
         matricula_aluno INTEGER PRIMARY KEY,
         id_materia INTEGER NOT NULL,
-        nota INTEGER NULL,
+        nota INTEGER NOT NULL,
         FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula) ON DELETE CASCADE,
         FOREIGN KEY (id_materia) REFERENCES materia(id) ON DELETE CASCADE 
     )
