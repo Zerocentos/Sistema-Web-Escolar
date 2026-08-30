@@ -1,0 +1,51 @@
+#home {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#home .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#home .cabecalho h1 {
+  margin: 0;
+}
+
+#home .pagina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#home .botao {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0;
+  width: 400px;
+  border-radius: 0.75rem;
+}
+
+#home .botao:hover {
+  background-color: var(--bg-hover);
+}

@@ -4,11 +4,23 @@
     <title>Sistema Web Escolar - Home </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css' ) }}">
   </head>
 
   <body id="home">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
     <div class="pagina">
-      <h1>Seja bem vindo(a)!</h1>
+      <p>Bem vindo! Aqui você pode ver o cadastro de alunos, professores, cursos e muito mais!</p>
+
+      <nav>
+        <a class="botao" href="/alunos/">Ver alunos cadastrados</a>
+        <a class="botao" href="/professores/">Ver professores cadastrados</a>
+        <a class="botao" href="/materias/">Ver matérias cadastradas</a>
+        <a class="botao" href="/cursos/">Ver cursos cadastrados</a>
+      </nav>
     </div>
   </body>
 </html>
