@@ -54,18 +54,6 @@ def tabela_professor() -> str:
     '''
     return query
 
-def tabela_professor() -> str: 
-    query = '''
-    CREATE TABLE IF NOT EXISTS professor(
-        id_professor INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome VARCHAR(60) NOT NULL, 
-        email VARCHAR(40) NOT NULL,
-        telefone VARCHAR(30) NOT NULL,
-        data_nascimento DATETIME
-    )
-    '''
-    return query
-
 def aluno_curso() -> str: 
     query = '''
     CREATE TABLE IF NOT EXISTS aluno_curso (
@@ -116,26 +104,26 @@ def criar_tabelas():
     cursor = conexao.cursor()
 
     print("Colocando configurações...")
-    cursor.execute(ativa_foreign_key())
+    _ = cursor.execute(ativa_foreign_key())
     print("Configurações feitas!")
 
     print("Criando as tabelas...")
 
-    cursor.execute(tabela_aluno())
+    _ = cursor.execute(tabela_aluno())
 
-    cursor.execute(tabela_materia())
+    _ = cursor.execute(tabela_materia())
 
-    cursor.execute(tabela_curso())
+    _ = cursor.execute(tabela_curso())
 
-    cursor.execute(tabela_professor())
+    _ = cursor.execute(tabela_professor())
 
-    cursor.execute(aluno_curso())
+    _ = cursor.execute(aluno_curso())
     
-    cursor.execute(aluno_materia())
+    _ = cursor.execute(aluno_materia())
     
-    cursor.execute(curso_materia())
+    _ = cursor.execute(curso_materia())
 
-    cursor.execute(materia_professor())
+    _ = cursor.execute(materia_professor())
 
     conexao.commit()
 
