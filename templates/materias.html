@@ -4,11 +4,35 @@
     <title>Sistema Web Escolar - Matérias </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='materias.css' )}}"
   </head>
 
   <body id="materias">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
     <div class="pagina">
-      <h1>Essa página ainda não está pronta...</h1>
+      <a class="botao" href="/materias/nova/">Adicionar nova matéria</a>
+      
+      <table id="tabela-materias">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Carga horária</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for materia in Materias %}
+          <tr>
+            <td>{{ materia.nome }}</td>
+            <td>{{ materia.carga_horaria }}</td>
+          </tr>
+          {% else %}
+            <tr><td colspan="2">Nenhuma matéria existente.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

@@ -37,9 +37,14 @@ def novo_professor() -> str:
 
 @app.route("/materias/")
 def materias() -> str:
-    return render_template("materias.html")
+    cursor = sqlite3.connect(BANCO_DE_DADOS).cursor()
 
-@app.route("/materias/nova")
+    materias = cursor.execute("SELECT * FROM materia").fetchall()
+
+    return render_template("materias.html", 
+                           Materias = materias)
+
+@app.route("/materias/nova/")
 def nova_materia() -> str:
     return render_template("nova_materia.html")
 
