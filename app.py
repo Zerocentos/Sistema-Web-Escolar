@@ -47,7 +47,7 @@ def materias() -> str:
 @app.route("/materias/nova/", methods=["GET", "POST"])
 def nova_materia() -> str:
     if request.method == "POST":
-        nome = request.form["nome"]
+        nome = request.form["nome"].strip()
         carga_horaria = request.form["carga_horaria"]
 
         conn = sqlite3.connect(BANCO_DE_DADOS)
