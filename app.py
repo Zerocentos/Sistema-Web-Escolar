@@ -1,3 +1,4 @@
+import sys
 from flask import Flask, render_template, request
 import sqlite3
 import os
@@ -149,6 +150,13 @@ def home() -> str:
     return render_template("index.html")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORTA_SERVIDOR", 5000))
+    if not os.path.exists(BANCO_DE_DADOS):
+        print("""
+Não foi possível encontrar o arquivo do banco de dados, impossível iniciar o servidor.
 
+Para criar o banco de dados, rode 'model.py'.
+        """)
+        sys.exit();
+
+    port = int(os.environ.get("PORTA_SERVIDOR", 5000))
     app.run(host="0.0.0.0", debug=True, port=port)
