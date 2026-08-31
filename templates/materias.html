@@ -19,14 +19,14 @@
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Carga horária</th>
+            <th>Carga horária (horas)</th>
           </tr>
         </thead>
         <tbody>
           {% for materia in Materias %}
           <tr>
-            <td>{{ materia.nome }}</td>
-            <td>{{ materia.carga_horaria }}</td>
+            <td>{{ materia[1] }}</td>
+            <td>{{ materia[2] }}</td>
           </tr>
           {% else %}
             <tr><td colspan="2">Nenhuma matéria existente.</td></tr>
