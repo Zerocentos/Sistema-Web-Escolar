@@ -28,7 +28,7 @@ def professores() -> str:
     return render_template("professores.html")
 
 @app.route("/professores/novo/")
-def novo_professor() -> str:
+def novo_professor() -> str:  
     return render_template("novo_professor.html")
 
 # ==============================================================================
@@ -44,9 +44,27 @@ def materias() -> str:
     return render_template("materias.html", 
                            Materias = materias)
 
-@app.route("/materias/nova/")
+@app.route("/materias/nova/", methods=["GET", "POST"])
 def nova_materia() -> str:
-    return render_template("nova_materia.html")
+    if request.method == "POST":
+        nome = request.form["nome"]
+        carga_horaria = request.form["carga_horaria"]
+
+        conn = sqlite3.connect(BANCO_DE_DADOS)
+        cursor = conn.cursor()
+        
+        _ = cursor.execute(
+            "INSERT INTO materia (nome, carga_horaria) VALUES (?, ?)",
+            (nome, carga_horaria)
+        ) 
+          
+        conn.commit()
+        conn.close()
+        
+        return render_template('nova_materia.html', 
+                             Mensagem=f"Matéria cadastrada com sucesso!")
+ 
+    return render_template("nova_materia.html", Mensagem="")
 
 # ==============================================================================
 
