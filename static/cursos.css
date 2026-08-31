@@ -1,0 +1,151 @@
+/* Listagem de cursos:  */
+
+#cursos {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#cursos .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#cursos .cabecalho h1 {
+  margin: 0;
+}
+
+#cursos .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#cursos .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#cursos .botao:hover {
+  background-color: var(--bg-hover);
+}
+
+#cursos #tabela-cursos {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+}
+
+#cursos #tabela-cursos th,
+#cursos #tabela-cursos td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bg);
+}
+
+/* #cursos #tabela-materias th:first-child, */
+/* #cursos #tabela-materias td:first-child { */
+/*   border-right: 1px solid var(--bg); */
+/* } */
+
+#cursos #tabela-cursos th {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* Forms da novo curso: */
+
+#novo-curso {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#novo-curso .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#novo-curso .cabecalho h1 {
+  margin: 0;
+}
+
+#novo-curso .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#novo-curso .pagina .forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#novo-curso .pagina .forms input:not([type="checkbox"]) {
+  padding: 0.75rem 1rem;
+  width: 300px;
+  border: 1px solid var(--bg);
+  border-radius: 0.75rem;
+  color: var(--fg-alt);
+  background-color: var(--bg-alt);
+  box-sizing: border-box;
+  margin: 0rem 0 1rem;
+}
+
+#novo-curso .pagina .forms #materias label {
+  display: block;
+  color: var(--fg-alt);
+  margin-bottom: 0.5rem;
+}
+
+#novo-curso .pagina .forms .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0 0.5rem;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#novo-curso .pagina .mensagem {
+  color: var(--success);
+  text-align: center;
+}
+
+#novo-curso .botao:hover {
+  background-color: var(--bg-hover);
+}

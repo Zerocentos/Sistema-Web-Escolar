@@ -72,11 +72,73 @@ def nova_materia() -> str:
 
 @app.route("/cursos/")
 def cursos() -> str:
-    return render_template("cursos.html")
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
 
-@app.route("/cursos/novo")
+    _ = cursor.execute("""
+    SELECT id_curso, nome, descricao FROM curso
+    """)
+
+    _cursos: list[tuple[str]] = cursor.fetchall()
+    cursos = list(map(list, _cursos))
+
+    for curso in cursos:
+        id_curso = curso[0]
+
+        _ = cursor.execute("""
+        SELECT materia.nome FROM curso_materia 
+        JOIN materia ON materia.id_materia
+        WHERE curso_materia.id_curso = ?
+        """, (id_curso,))
+
+        rows: list[list[str]] = cursor.fetchall()
+        
+        materias = [str(row[0]) for row in rows]
+
+        curso.append(", ".join(materias))
+
+    return render_template("cursos.html", Cursos=cursos)
+
+@app.route("/cursos/novo/", methods=["GET", "POST"])
 def novo_curso() -> str:
-    return render_template("novo_curso.html")
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        descricao = request.form["descricao"].strip()
+        materias = request.form.getlist("materias")
+
+        conn = sqlite3.connect(BANCO_DE_DADOS)
+        cursor = conn.cursor()
+        
+        _ = cursor.execute(
+            "INSERT INTO curso (nome, descricao) VALUES (?, ?)",
+            (nome, descricao)
+        ) 
+
+        id = cursor.lastrowid
+
+        for id_materia in materias:
+            _ = cursor.execute("""
+            INSERT INTO curso_materia (id_curso, id_materia)
+            VALUES (?, ?)
+            """, (id, id_materia))
+        
+        conn.commit()
+        conn.close()
+        
+        return render_template('novo_curso.html', 
+                             Mensagem="Curso cadastrado com sucesso!")
+
+
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+
+    _ = cursor.execute("SELECT id_materia, nome FROM materia")
+
+    materias = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("novo_curso.html", Materias=materias)
 
 # ==============================================================================
 
