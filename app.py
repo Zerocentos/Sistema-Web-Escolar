@@ -12,20 +12,25 @@ _ = load_dotenv()
 
 # Alunos =======================================================================
 
+# Coloca zeros à esquerda na matricula se necessário
+def formatar_matricula(matricula) -> str:
+    return f"{int(matricula):04d}"
+
 @app.route("/alunos/<int:matricula>/")
-def aluno(matricula: int) -> str:
-    print("matricula: " + str(matricula))
-    
+def aluno(matricula: int) -> str:   
     conn = sqlite3.connect(BANCO_DE_DADOS)
-    cursor = conn.cursor()
+    cursor = conn.cursor() 
 
     _ = cursor.execute("""
-    SELECT nome FROM aluno
-    """)
+    SELECT * FROM aluno
+    WHERE matricula = ?
+    """, (matricula,))
 
-    aluno: str = cursor.fetchone()[0]
+    aluno = list(cursor.fetchone())
 
-    return render_template("aluno.html", Aluno=aluno, Matricula=matricula)
+    aluno[0] = formatar_matricula(aluno[0])
+
+    return render_template("aluno.html", Aluno=aluno)
 
 @app.route("/alunos/")
 def alunos() -> str:
@@ -37,9 +42,7 @@ def alunos() -> str:
     ))
 
     for aluno in alunos:
-        aluno[0] = f"{int(aluno[0]):04d}" # Coloca zeros à esquerda na
-                                          # matricula se necessário
-
+        aluno[0] = formatar_matricula(aluno[0]) 
         _ = cursor.execute("""
         SELECT curso.nome FROM aluno_curso
         JOIN curso ON curso.id_curso
