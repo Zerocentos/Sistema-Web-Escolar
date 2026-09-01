@@ -1,0 +1,159 @@
+/* Listagem de alunos:  */
+
+#alunos {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#alunos .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#alunos .cabecalho h1 {
+  margin: 0;
+}
+
+#alunos .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#alunos .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#alunos .botao:hover {
+  background-color: var(--bg-hover);
+}
+
+#alunos #tabela-alunos {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+}
+
+#alunos #tabela-alunos th,
+#alunos #tabela-alunos td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bg);
+}
+
+/* #alunos #tabela-materias th:first-child, */
+/* #alunos #tabela-materias td:first-child { */
+/*   border-right: 1px solid var(--bg); */
+/* } */
+
+#alunos #tabela-alunos th {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* Forms de novo aluno: */
+
+#novo-aluno {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#novo-aluno .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#novo-aluno .cabecalho h1 {
+  margin: 0;
+}
+
+#novo-aluno .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#novo-aluno .pagina .forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#novo-aluno .pagina .forms input {
+  margin: 0rem 0 1rem;
+}
+
+#novo-aluno .pagina .forms input:not([type="radio"]) {
+  padding: 0.75rem 1rem;
+  width: 300px;
+  border: 1px solid var(--bg);
+  border-radius: 0.75rem;
+  color: var(--fg-alt);
+  background-color: var(--bg-alt);
+  box-sizing: border-box;
+}
+
+#novo-aluno .pagina .forms #cursos {
+  display: flex;
+  flex-direction: column;
+}
+
+#novo-aluno .pagina .forms #materias label {
+  display: block;
+  color: var(--fg-alt);
+  margin-bottom: 0.5rem;
+}
+
+#novo-aluno .pagina .forms .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0 0.5rem;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#novo-aluno .pagina .mensagem {
+  color: var(--success);
+  text-align: center;
+}
+
+#novo-aluno .botao:hover {
+  background-color: var(--bg-hover);
+}

@@ -4,11 +4,39 @@
     <title>Sistema Web Escolar - Alunos </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='alunos.css' )}}">
   </head>
 
   <body id="alunos">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
     <div class="pagina">
-      <h1>Essa página ainda não está pronta...</h1>
+      <a class="botao" href="/alunos/novo/">Adicionar novo aluno</a>
+
+      <table id="tabela-alunos">
+        <thead>
+          <tr>
+            <th>Matricula</th>
+            <th>Nome</th>
+            <th>Curso</th>
+            <th>Data de nascimento</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for aluno in Alunos %}
+          <tr>
+            <td>{{ aluno[0] }}</td>
+            <td>{{ aluno[1] }}</td>
+            <td>{{ aluno[2] }}</td>
+            <td>{{ aluno[3] }}</td>
+          </tr>
+          {% else %}
+            <tr><td colspan="4">Nenhum aluno existente.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

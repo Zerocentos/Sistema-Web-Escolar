@@ -14,11 +14,69 @@ _ = load_dotenv()
 
 @app.route("/alunos/")
 def alunos() -> str:
-    return render_template("alunos.html")
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
 
-@app.route("/alunos/novo/")
+    alunos: list[list[str]] = list(map(
+        list, cursor.execute("SELECT matricula, nome, data_nascimento FROM aluno").fetchall()
+    ))
+
+    for aluno in alunos:
+        aluno[0] = f"{int(aluno[0]):04d}" # Coloca zeros à esquerda na
+                                          # matricula se necessário
+
+        _ = cursor.execute("""
+        SELECT curso.nome FROM aluno_curso
+        JOIN curso ON curso.id_curso
+        WHERE matricula_aluno = ?
+        """, (int(aluno[0]),))
+
+        rows: list[tuple[str]] = list(cursor.fetchall())
+        nome_curso = rows[0][0]
+
+        aluno.insert(2, nome_curso)
+
+    conn.close()
+
+    return render_template("alunos.html", Alunos=alunos)
+
+@app.route("/alunos/novo/", methods=["GET", "POST"])
 def novo_aluno() -> str:
-    return render_template("novo_aluno.html")
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        email = request.form["email"].strip()
+        telefone = request.form["telefone"].strip()
+        data_nascimento = request.form["data-nascimento"]
+        id_curso = request.form["curso"]
+
+        _ = cursor.execute('''
+        INSERT INTO aluno (nome, email, telefone, data_nascimento)
+        VALUES (?, ?, ?, ?)
+        ''', (nome, email, telefone, data_nascimento))
+
+        matricula = cursor.lastrowid
+
+        _ = cursor.execute('''
+        INSERT INTO aluno_curso (id_curso, matricula_aluno)
+        VALUES (?, ?)
+        ''', (id_curso, matricula))
+
+        conn.commit()
+        conn.close()
+
+        return render_template("novo_aluno.html",
+                               Mensagem="Aluno cadastrado com sucesso!")
+
+    _ = cursor.execute("SELECT id_curso, nome FROM curso")
+
+    cursos = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("novo_aluno.html", Cursos=cursos)
 
 # ==============================================================================
 
