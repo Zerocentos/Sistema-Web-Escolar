@@ -3,8 +3,9 @@
   --bg: #064E3B;
   --bg-hover: #04372A;
 
-  --bg-alt: #FFFBF2;
   --fg-alt: #064E3B;
+  --bg-alt: #FFFBF2;
+  --bg-alt-hover: #F5EFE2;
 
   --success: #1B8A5A;
   --warning: #C77700;
