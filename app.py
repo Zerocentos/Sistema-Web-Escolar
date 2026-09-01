@@ -12,6 +12,21 @@ _ = load_dotenv()
 
 # Alunos =======================================================================
 
+@app.route("/alunos/<int:matricula>/")
+def aluno(matricula: int) -> str:
+    print("matricula: " + str(matricula))
+    
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+
+    _ = cursor.execute("""
+    SELECT nome FROM aluno
+    """)
+
+    aluno: str = cursor.fetchone()[0]
+
+    return render_template("aluno.html", Aluno=aluno, Matricula=matricula)
+
 @app.route("/alunos/")
 def alunos() -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)

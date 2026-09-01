@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Sistema Web Escolar - {{ Aluno }}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='alunos.css') }}">
+  </head>
+
+  <body id="aluno">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
+    <div class="pagina">
+      <h3>Essa página ainda não está pronta...</h3>
+
+      <h4>Porém, uma informação! A matricula e o nome desse aluno são, respectivamente, {{ Matricula }} e {{ Aluno }}.</h4>
+    </div>
+  </body>
+</html>

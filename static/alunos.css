@@ -60,6 +60,10 @@
   border: 1px solid var(--bg);
 }
 
+#alunos #tabela-alunos .linha-aluno:hover {
+  background-color: var(--bg-alt-hover)
+}
+
 /* #alunos #tabela-materias th:first-child, */
 /* #alunos #tabela-materias td:first-child { */
 /*   border-right: 1px solid var(--bg); */
@@ -155,5 +159,55 @@
 }
 
 #novo-aluno .botao:hover {
+  background-color: var(--bg-hover);
+}
+
+/* Dados de um aluno: */
+
+#aluno {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#aluno .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#aluno .cabecalho h1 {
+  margin: 0;
+}
+
+#aluno .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#aluno .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#aluno .botao:hover {
   background-color: var(--bg-hover);
 }

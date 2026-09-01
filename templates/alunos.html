@@ -26,7 +26,7 @@
         </thead>
         <tbody>
           {% for aluno in Alunos %}
-          <tr>
+          <tr class="linha-aluno" data-href="/alunos/{{ aluno[0] }}/">
             <td>{{ aluno[0] }}</td>
             <td>{{ aluno[1] }}</td>
             <td>{{ aluno[2] }}</td>
@@ -38,5 +38,21 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Para o clique da linha: -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const linhas = document.querySelectorAll(".linha-aluno");
+      linhas.forEach(linha => {
+        linha.addEventListener("click", function() {
+          const selecao = window.getSelection().toString();
+          const algoFoiSelecionado = selecao.length != 0;
+
+          if(!algoFoiSelecionado)
+            window.location.href = this.dataset.href;
+        });
+      });
+    });
+    </script>
   </body>
 </html>
