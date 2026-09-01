@@ -35,7 +35,19 @@ def aluno(matricula: int) -> str:
 
     aluno = list(cursor.fetchone())
 
+    _ = cursor.execute("""
+    SELECT curso.nome FROM aluno_curso
+    JOIN curso ON curso.id_curso = aluno_curso.id_curso
+    WHERE matricula_aluno = ?
+    """, (int(aluno[0]),))
+
+    row: list[str] = list(cursor.fetchone())
+    nome_curso = row[0]
+
+    aluno.append(nome_curso)
+
     aluno[0] = formatar_matricula(aluno[0])
+    aluno[4] = formatar_data(aluno[4])
 
     return render_template("aluno.html", Aluno=aluno)
 
