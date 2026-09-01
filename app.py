@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 from flask import Flask, render_template, request
 import sqlite3
 import os
@@ -9,6 +10,12 @@ from model import BANCO_DE_DADOS
 app = Flask(__name__)
 _ = load_dotenv()
 
+
+# Util ========================================================================
+
+def formatar_data(data) -> str:
+    d =  datetime.strptime(data, "%Y-%m-%d")
+    return d.strftime("%d/%m/%Y")
 
 # Alunos =======================================================================
 
@@ -50,9 +57,12 @@ def alunos() -> str:
         """, (int(aluno[0]),))
 
         rows: list[tuple[str]] = list(cursor.fetchall())
-        nome_curso = rows[0][0]
 
+        nome_curso = rows[0][0]
         aluno.insert(2, nome_curso)
+
+        data = formatar_data(aluno[3])
+        aluno[3] = data 
 
     conn.close()
 
