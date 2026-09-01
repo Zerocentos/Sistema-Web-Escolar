@@ -264,12 +264,12 @@ import sys
 from flask import Flask, render_template, request
 import sqlite3
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 from model import BANCO_DE_DADOS
 
 app = Flask(__name__)
-#_ = load_dotenv()
+_ = load_dotenv()
 
 
 # Alunos =======================================================================
