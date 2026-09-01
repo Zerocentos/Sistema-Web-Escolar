@@ -45,7 +45,7 @@ def alunos() -> str:
         aluno[0] = formatar_matricula(aluno[0]) 
         _ = cursor.execute("""
         SELECT curso.nome FROM aluno_curso
-        JOIN curso ON curso.id_curso
+        JOIN curso ON curso.id_curso = aluno_curso.id_curso
         WHERE matricula_aluno = ?
         """, (int(aluno[0]),))
 
