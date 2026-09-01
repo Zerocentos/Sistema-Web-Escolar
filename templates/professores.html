@@ -7,8 +7,41 @@
   </head>
 
   <body id="professores">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
+    <a href="/professores/novo/"> Adicionar Professor </a>
+
     <div class="pagina">
-      <h1>Essa página ainda não está pronta...</h1>
+
+      <table id="tabela-alunos">
+        <thead>
+          <tr>
+            <th> ID </th>
+            <th> Nome </th>
+            <th> Email </th>
+            <th> Telefone </th>
+            <th> Data de nascimento </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for professor in Professores %}
+          <tr>
+            <td>{{ professor[0] }}</td>
+            <td>{{ professor[1] }}</td>
+            <td>{{ professor[2] }}</td>
+            <td>{{ professor[3] }}</td>
+          </tr>
+
+          {% else %}
+            <tr><td colspan="4"> Nenhum professor contratado. </td></tr>
+            
+          {% endfor %}
+        </tbody>
+      </table>
+
     </div>
   </body>
-</html>
+</html> 
