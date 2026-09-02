@@ -211,3 +211,21 @@
 #aluno .botao:hover {
   background-color: var(--bg-hover);
 }
+
+#aluno #tabela-notas {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+}
+
+#aluno #tabela-notas th,
+#aluno #tabela-notas td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bg);
+}
+
+#aluno #tabela-notas th {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+

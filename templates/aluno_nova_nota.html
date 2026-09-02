@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Sistema Web Escolar - Nova nota para {{ Aluno[1] }}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='alunos.css') }}">
+  </head>
+
+  <body id="aluno-nova-nota">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
+    <div class="pagina">
+      {% if Mensagem %}
+        <h3 class="mensagem">{{ Mensagem }}</h3>
+      {% else %}
+        <form class="forms" method="POST">
+          <label for="nota">Nota *:</label> 
+          <input type="number" id="nota" name="nota" min="0" required placeholder="e.g. 7.5">
+
+          <div id="materias">
+            <label>Matéria *:</label><br>
+                  {% for materia in Materias %}
+            <label>
+                <input type="radio" name="materia" value="{{ materia[0] }}">
+                {{ materia[1] }}
+            </label>
+            {% endfor %}
+          </div>
+
+          <button class="botao" type="submit">Dar nota</button>
+        </form>
+      {% endif %}
+    </div>
+  </body>
+</html>

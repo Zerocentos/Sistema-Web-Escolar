@@ -19,6 +19,29 @@
       <h3>Email: {{ Aluno[2] }}</h3>
       <h3>Telefone: {{ Aluno[3] }}</h3>
       <h3>Data de nascimento: {{ Aluno[4] }}</h3>
+
+      <h3>Notas desse aluno:</h3>
+      <table id="tabela-notas">
+        <thead>
+          <tr>
+            <th>Nota</th>
+            <th>Matéria</th>
+          </tr>
+        </thead>
+        <tr>
+          {% for nota in Notas %}
+            <tr>
+              <td>{{ nota[1] }}</td>
+              <td>{{ nota[2] }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="2">Nenhuma nota atribuída a {{ Aluno[1] }}.</td></tr>
+          {% endfor %}
+        </td>
+        </tr>
+      </table>
+
+      <a class="botao" href="/alunos/{{ Aluno[0] }}/nova-nota/">Nova nota</a>
     </div>
   </body>
 </html>
