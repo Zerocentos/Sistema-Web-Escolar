@@ -4,18 +4,20 @@
     <title>Sistema Web Escolar - Professores </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='professor.css' )}}">
   </head>
 
   <body id="professores">
     <header class="cabecalho">
-      <h1>Sistema Web Escolar</h1>
+      <h1> Sistema Web Escolar </h1>
     </header>
 
-    <a href="/professores/novo/"> Adicionar Professor </a>
+    
 
     <div class="pagina">
+      <a class="botao" href="/professores/novo/"> Adicionar professor </a>
 
-      <table id="tabela-alunos">
+      <table id="tabela-professores">
         <thead>
           <tr>
             <th> ID </th>
@@ -23,16 +25,19 @@
             <th> Email </th>
             <th> Telefone </th>
             <th> Data de nascimento </th>
+            <th> Disciplinas lesionadas </th>
           </tr>
         </thead>
 
         <tbody>
           {% for professor in Professores %}
-          <tr>
+          <tr class="linha-professor" data-href="/professores/{{ professor[0] }}">
             <td>{{ professor[0] }}</td>
             <td>{{ professor[1] }}</td>
             <td>{{ professor[2] }}</td>
             <td>{{ professor[3] }}</td>
+            <td>{{ professor[4] }}</td>
+            <td>{{ professor[5] }}</td>
           </tr>
 
           {% else %}
@@ -41,7 +46,23 @@
           {% endfor %}
         </tbody>
       </table>
-
     </div>
+
+    <!-- Para o clique da linha: -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const linhas = document.querySelectorAll(".linha-professor");
+      linhas.forEach(linha => {
+        linha.addEventListener("click", function() {
+          const selecao = window.getSelection().toString();
+          const algoFoiSelecionado = selecao.length != 0;
+
+          if(!algoFoiSelecionado)
+            window.location.href = this.dataset.href;
+        });
+      });
+    });
+    </script>
+
   </body>
 </html> 

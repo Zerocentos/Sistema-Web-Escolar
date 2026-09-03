@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Sistema Web Escolar - {{ Professor[1] }}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='professor.css') }}">
+  </head>
+
+  <body id="professor">
+    <header class="cabecalho">
+      <h1>Sistema Web Escolar</h1>
+    </header>
+
+    <div class="pagina">
+      <h2>{{ Professor[1] }}</h2>
+      <h3>Número de matricula: {{ Professor[0] }}</h3>
+      <h3>Matéria: {{ Professor[5] }}</h3>
+      <h3>Email: {{ Professor[2] }}</h3>
+      <h3>Telefone: {{ Professor[3] }}</h3>
+      <h3>Data de nascimento: {{ Professor[4] }}</h3>
+    </div>
+  </body>
+</html>

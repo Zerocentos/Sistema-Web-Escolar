@@ -1,0 +1,231 @@
+/* Listagem de professores:  */
+
+#professores {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#professores .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#professores .cabecalho h1 {
+  margin: 0;
+}
+
+#professores .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#professores .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#professores .botao:hover {
+  background-color: var(--bg-hover);
+}
+
+#professores #tabela-professores {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+}
+
+#professores #tabela-professores th,
+#professores #tabela-professores td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bg);
+}
+
+#professores #tabela-professores .linha-professor:hover {
+  background-color: var(--bg-alt-hover)
+}
+
+/* #alunos #tabela-materias th:first-child, */
+/* #alunos #tabela-materias td:first-child { */
+/*   border-right: 1px solid var(--bg); */
+/* } */
+
+#professores #tabela-professores th {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* Forms de novo professor: */
+
+#novo-professor {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#novo-professor .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#novo-professor .cabecalho h1 {
+  margin: 0;
+}
+
+#novo-professor .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#novo-professor .pagina .forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#novo-professor .pagina .forms input {
+  margin: 0rem 0 1rem;
+}
+
+#novo-professor .pagina .forms input:not([type="radio"]) {
+  padding: 0.75rem 1rem;
+  width: 300px;
+  border: 1px solid var(--bg);
+  border-radius: 0.75rem;
+  color: var(--fg-alt);
+  background-color: var(--bg-alt);
+  box-sizing: border-box;
+}
+
+#novo-professor .pagina .forms #cursos {
+  display: flex;
+  flex-direction: column;
+}
+
+#novo-professor .pagina .forms #materias label {
+  display: block;
+  color: var(--fg-alt);
+  margin-bottom: 0.5rem;
+}
+
+#novo-professor .pagina .forms .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0 0.5rem;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#novo-professor .pagina .mensagem {
+  color: var(--success);
+  text-align: center;
+}
+
+#novo-professor .botao:hover {
+  background-color: var(--bg-hover);
+}
+
+/* Dados de um aluno: */
+
+#professor {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+#professor .cabecalho {
+  text-align: center;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding: 1.5rem 2rem;
+}
+
+#professor .cabecalho h1 {
+  margin: 0;
+}
+
+#professor .pagina {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  width: 75rem;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-alt);
+  color: var(--fg-alt);
+  padding: 2rem;
+  border-radius: 0.75rem 0.5rem 0rem 0rem;
+}
+
+#professor .botao {
+  background-color: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0;
+  width: 300px;
+  border-radius: 0.75rem;
+}
+
+#professor .botao:hover {
+  background-color: var(--bg-hover);
+}
+
+#professor #tabela-notas {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+}
+
+#professor #tabela-notas th,
+#professor #tabela-notas td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bg);
+}
+
+#professor #tabela-notas th {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
