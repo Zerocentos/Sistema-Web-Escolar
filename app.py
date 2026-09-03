@@ -1,6 +1,6 @@
 import sys
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import sqlite3
 import os
 from dotenv import load_dotenv
@@ -253,6 +253,20 @@ def novo_professor() -> str:
     conn.close()
     
     return render_template("novo_professor.html", Materias=materias)
+
+@app.route("/professores/<int:id_professor>/excluir", methods=["POST"])
+def excluir_professores(id_professor: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+
+    _ = cursor.execute(""" DELETE FROM professor
+                        WHERE id_professor = ? """, 
+                        (id_professor,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/professores/")
 
 # ==============================================================================
 
