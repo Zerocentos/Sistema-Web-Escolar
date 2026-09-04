@@ -48,6 +48,21 @@
   background-color: var(--bg-hover);
 }
 
+#professores .botao-excluir {
+    background-color: var(--danger); /* cor do botão */
+    color: var(--bg-alt); /* cor do texto */
+    border-radius: 0.50rem; /* arredondamento da borda */
+    border: none;
+    padding: 0.50rem 1.00rem; /* */
+    transition: background 0.10s; /* transição suave */ 
+    margin: 0rem 0;
+}
+
+#professores .botao-excluir:hover {
+    background-color: var(--danger-hover); /* cor do botão */
+    color: var(--bg-alt-hover); /* cor do texto */
+}
+
 #professores #tabela-professores {
   width: 100%;
   margin-top: 1.5rem;
@@ -63,11 +78,6 @@
 #professores #tabela-professores .linha-professor:hover {
   background-color: var(--bg-alt-hover)
 }
-
-/* #alunos #tabela-materias th:first-child, */
-/* #alunos #tabela-materias td:first-child { */
-/*   border-right: 1px solid var(--bg); */
-/* } */
 
 #professores #tabela-professores th {
   background-color: var(--bg);
@@ -162,7 +172,7 @@
   background-color: var(--bg-hover);
 }
 
-/* Dados de um aluno: */
+/* Dados de um professor: */
 
 #professor {
   margin: 0;
@@ -212,20 +222,4 @@
   background-color: var(--bg-hover);
 }
 
-#professor #tabela-notas {
-  width: 100%;
-  margin-top: 1.5rem;
-  border-collapse: collapse;
-}
-
-#professor #tabela-notas th,
-#professor #tabela-notas td {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--bg);
-}
-
-#professor #tabela-notas th {
-  background-color: var(--bg);
-  color: var(--fg);
-}
 
