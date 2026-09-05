@@ -1,6 +1,6 @@
 import sys
 from datetime import datetime
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import os
 from dotenv import load_dotenv
@@ -255,7 +255,7 @@ def novo_professor() -> str:
     return render_template("novo_professor.html", Materias=materias)
 
 @app.route("/professores/<int:id_professor>/excluir", methods=["POST"])
-def excluir_professores(id_professor: int):
+def excluir_professor(id_professor: int):
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
 
@@ -266,7 +266,58 @@ def excluir_professores(id_professor: int):
     conn.commit()
     conn.close()
 
-    return redirect("/professores/")
+    return redirect(url_for("professores"))
+
+@app.route("/professores/<int:id_professor>/editar", methods=["GET", "POST"])
+def editar_professor(id_professor: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        email = request.form["email"].strip()
+        telefone = request.form["telefone"].strip()
+        data_nascimento = request.form["data-nascimento"]
+        id_materia = request.form["materia"]
+
+        _ = cursor.execute(""" UPDATE professor SET nome = ?, email = ?, telefone = ?,
+                                data_nascimento = ? 
+                                WHERE id_professor = ? """, 
+                                (nome, email, telefone, data_nascimento, id_professor))
+
+        _ = cursor.execute(""" DELETE FROM materia_professor 
+                            WHERE id_professor = ? """, (id_professor,))
+
+        _ = cursor.execute(""" INSERT INTO materia_professor (id_materia, id_professor) VALUES (?, ?)""",
+                           (id_materia, id_professor))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("professores"))
+    
+    _ = cursor.execute(""" SELECT id_professor, nome, email, telefone, data_nascimento
+                            FROM professor 
+                            WHERE id_professor = ?""", 
+                        (id_professor,))
+
+    professor = list(cursor.fetchone())
+
+    _ = cursor.execute(""" SELECT id_materia FROM materia_professor 
+                        WHERE id_professor = ? """, (id_professor,))
+
+    id_materia = cursor.fetchone()
+    
+    professor.append(id_materia[0])
+
+    _ = cursor.execute(""" SELECT id_materia, nome FROM materia """)
+
+    materias = cursor.fetchall()
+
+    conn.commit()
+    conn.close()
+
+    return render_template("novo_professor.html", Materias=materias, Modo="editar", Professor=professor)
 
 # ==============================================================================
 
@@ -324,7 +375,7 @@ def cursos() -> str:
 
         _ = cursor.execute("""
         SELECT materia.nome FROM curso_materia 
-        JOIN materia ON materia.id_materia
+        JOIN materia ON materia.id_materia = curso_materia.id_materia
         WHERE curso_materia.id_curso = ?
         """, (id_curso,))
 

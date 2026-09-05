@@ -17,25 +17,33 @@
         <h3 class="mensagem">{{ Mensagem }}</h3>
     
       {% else %}
-        <form class="forms" method="POST">
+        <form class="forms" method="POST" 
+        action="{{ url_for('editar_professor', id_professor=Professor[0]) if Modo == 'editar' 
+                  else url_for('novo_professor')}}">
+
           <label for="nome"> Nome *: </label>
-          <input type="text" id="nome" name="nome" required placeholder="e.g. Fulano Ciclano">
+          <input type="text" id="nome" name="nome" required placeholder="e.g. Fulano Ciclano"
+          value="{{ Professor[1] if Professor }}">
 
           <label for="email"> Email: </label>
-          <input type="text" id="email" name="email" placeholder="e.g. exemplo@exemplo.com">
+          <input type="text" id="email" name="email" placeholder="e.g. exemplo@exemplo.com"
+          value="{{ Professor[2] if Professor }}">
 
           <label for="telefone"> Telefone: </label>
-          <input type="text" id="telefone" name="telefone" placeholder="e.g. 31 0000-0000">
+          <input type="text" id="telefone" name="telefone" placeholder="e.g. 31 0000-0000"
+          value="{{ Professor[3] if Professor }}">
 
           <label for="data-nascimento"> Data de nascimento *: </label>
-          <input type="date" id="data-nascimento" name="data-nascimento" required>
+          <input type="date" id="data-nascimento" name="data-nascimento" required
+          value="{{ Professor[4] if Professor }}">
 
           <div id="materias">
             <label> Materias *: </label><br>
                   {% for materia in Materias %}
 
             <label>
-                <input type="radio" name="materia" value="{{ materia[0] }}">
+                <input type="radio" name="materia" value="{{ materia[0] }}"  
+                {% if Professor and materia[0] == Professor[5]  %} checked {% endif %}>
                 {{ materia[1] }}
             </label>
 

@@ -40,11 +40,13 @@
             <td>{{ professor[5] }}</td>
             <td> <form action="/professores/{{ professor[0] }}/excluir" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir?')"> 
               <button class="botao-excluir" type="submit"> excluir </button> 
-            </form> </td>
+            </form> 
+              <a href="/professores/{{ professor[0] }}/editar"> editar </a> 
+          </td>
           </tr>
 
           {% else %}
-            <tr><td colspan="6"> Nenhum professor contratado. </td></tr>
+            <tr><td colspan="4"> Nenhum professor contratado. </td></tr>
             
           {% endfor %}
         </tbody>
