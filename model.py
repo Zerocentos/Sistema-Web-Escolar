@@ -25,7 +25,7 @@ def tabela_materia() -> str:
     query = '''
     CREATE TABLE IF NOT EXISTS materia(
         id_materia INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome VARCHAR(40) NOT NULL CHECK (LENGTH(nome) <= 40),
+        nome VARCHAR(40) NOT NULL UNIQUE CHECK (LENGTH(nome) <= 40),
         carga_horaria INT NOT NULL CHECK (carga_horaria > 0)
     )
     '''
@@ -35,7 +35,7 @@ def tabela_curso() -> str:
     query = '''
     CREATE TABLE IF NOT EXISTS curso(
         id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome VARCHAR(50) NOT NULL CHECK (LENGTH(nome) <= 50),
+        nome VARCHAR(50) NOT NULL UNIQUE CHECK (LENGTH(nome) <= 50),
         descricao VARCHAR(100) CHECK (LENGTH(descricao) <= 100)
     )
     '''
@@ -58,8 +58,7 @@ def aluno_curso() -> str:
     query = '''
     CREATE TABLE IF NOT EXISTS aluno_curso (
         id_curso INTEGER NOT NULL,
-        matricula_aluno INTEGER NOT NULL,
-        PRIMARY KEY (id_curso, matricula_aluno),
+        matricula_aluno PRIMARY KEY NOT NULL,
         FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula) ON DELETE CASCADE,
         FOREIGN KEY (id_curso) REFERENCES curso(id_curso) ON DELETE CASCADE
     )
@@ -71,7 +70,7 @@ def aluno_materia() -> str:
     CREATE TABLE IF NOT EXISTS aluno_materia(
         matricula_aluno INTEGER NOT NULL,
         id_materia INTEGER NOT NULL,
-        nota INTEGER NOT NULL CHECK (nota >= 0 AND nota <= 100),
+        nota FLOAT NOT NULL CHECK (nota >= 0 AND nota <= 100),
         PRIMARY KEY (matricula_aluno, id_materia),
         FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula) ON DELETE CASCADE,
         FOREIGN KEY (id_materia) REFERENCES materia(id_materia) ON DELETE CASCADE 
@@ -113,27 +112,32 @@ def criar_tabelas():
 
     print("Criando as tabelas...")
 
-    _ = cursor.execute(tabela_aluno())
+    try:
+        _ = cursor.execute(tabela_aluno())
 
-    _ = cursor.execute(tabela_materia())
+        _ = cursor.execute(tabela_materia())
 
-    _ = cursor.execute(tabela_curso())
+        _ = cursor.execute(tabela_curso())
 
-    _ = cursor.execute(tabela_professor())
+        _ = cursor.execute(tabela_professor())
 
-    _ = cursor.execute(aluno_curso())
-    
-    _ = cursor.execute(aluno_materia())
-    
-    _ = cursor.execute(curso_materia())
+        _ = cursor.execute(aluno_curso())
+        
+        _ = cursor.execute(aluno_materia())
+        
+        _ = cursor.execute(curso_materia())
 
-    _ = cursor.execute(materia_professor())
+        _ = cursor.execute(materia_professor())
 
-    conexao.commit()
+        conexao.commit()
 
-    print("Tabelas criadas com sucesso!")
+        print("Tabelas criadas com sucesso!")
 
-    conexao.close()
+    except sqlite3.Error as e:
+        print("Erro ao criar as tabelas:", e)
+
+    finally:
+        conexao.close()
 
 
 if __name__ == "__main__":
