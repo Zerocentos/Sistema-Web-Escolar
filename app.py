@@ -200,6 +200,78 @@ def novo_aluno() -> str:
 
     return render_template("novo_aluno.html", Cursos=cursos)
 
+@app.route("/alunos/<int:matricula>/excluir", methods=["POST"])
+def excluir_aluno(matricula: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    cursor.execute(
+        "DELETE FROM aluno WHERE matricula = ?",
+        (matricula,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("alunos"))
+
+
+@app.route("/alunos/<int:matricula>/editar", methods=["GET", "POST"])
+def editar_aluno(matricula: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    cursor.execute(
+        """SELECT matricula, nome, email, telefone, data_nascimento 
+        FROM aluno WHERE matricula = ?""",
+        (matricula,))
+
+    aluno = cursor.fetchone()
+
+    if aluno is None:
+        conn.close()
+        return "Aluno não encontrado", 404
+
+    cursor.execute("SELECT id_curso, nome FROM curso")
+    cursos = cursor.fetchall()
+
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        email = request.form["email"].strip()
+        telefone = request.form["telefone"].strip()
+        data_nascimento = request.form.get("data-nascimento") or None
+        id_curso = request.form.get("curso")
+
+        if not id_curso:
+            conn.close()
+            return render_template("novo_aluno.html", Aluno=aluno, Cursos=cursos, 
+                                   Modo="editar", Mensagem="Selecione um curso.")
+
+        cursor.execute("""
+            UPDATE aluno
+            SET nome = ?, email = ?, telefone = ?, data_nascimento = ?
+            WHERE matricula = ?
+        """, (nome, email, telefone, data_nascimento, matricula))
+
+        cursor.execute(
+            "DELETE FROM aluno_curso WHERE matricula_aluno = ?",
+            (matricula,))
+
+        cursor.execute("""
+            INSERT INTO aluno_curso (id_curso, matricula_aluno)
+            VALUES (?, ?)
+        """, (id_curso, matricula))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("aluno", matricula=matricula))
+
+    conn.close()
+
+    return render_template("novo_aluno.html", Aluno=aluno, Cursos=cursos, Modo="editar")
+
 # ==============================================================================
 
 # Professores ==================================================================
@@ -408,6 +480,61 @@ def nova_materia() -> str:
  
     return render_template("nova_materia.html", Mensagem="")
 
+
+@app.route("/materias/<int:id_materia>/excluir", methods=["POST"])
+def excluir_materia(id_materia: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    cursor.execute(
+        "DELETE FROM materia WHERE id_materia = ?",
+        (id_materia,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("materias"))
+
+
+@app.route("/materias/<int:id_materia>/editar", methods=["GET", "POST"])
+def editar_materia(id_materia: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    cursor.execute("""
+        SELECT id_materia, nome, carga_horaria
+        FROM materia
+        WHERE id_materia = ?
+    """, (id_materia,))
+
+    materia = cursor.fetchone()
+
+    if materia is None:
+        conn.close()
+        return "Matéria não encontrada", 404
+
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        carga_horaria = request.form["carga_horaria"]
+
+        cursor.execute("""
+            UPDATE materia
+            SET nome = ?, carga_horaria = ?
+            WHERE id_materia = ?
+        """, (nome, carga_horaria, id_materia))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("materias"))
+
+    conn.close()
+
+    return render_template("nova_materia.html", Materia=materia, 
+                           Modo="editar")
+
 # ==============================================================================
 
 # Cursos =======================================================================
@@ -492,6 +619,87 @@ def novo_curso() -> str:
     conn.close()
 
     return render_template("novo_curso.html", Materias=materias)
+
+@app.route("/cursos/<int:id_curso>/excluir", methods=["POST"])
+def excluir_curso(id_curso: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    cursor.execute(
+        "DELETE FROM curso WHERE id_curso = ?",
+        (id_curso,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("cursos"))
+
+
+@app.route("/cursos/<int:id_curso>/editar", methods=["GET", "POST"])
+def editar_curso(id_curso: int):
+    conn = sqlite3.connect(BANCO_DE_DADOS)
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA foreign_keys = ON")
+
+    cursor.execute("""
+        SELECT id_curso, nome, descricao
+        FROM curso
+        WHERE id_curso = ?
+    """, (id_curso,))
+
+    curso = cursor.fetchone()
+
+    if curso is None:
+        conn.close()
+        return "Curso não encontrado", 404
+
+    cursor.execute("SELECT id_materia, nome FROM materia")
+    materias = cursor.fetchall()
+
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        descricao = request.form.get("descricao", "").strip()
+        materias_selecionadas = request.form.getlist("materias")
+
+        if not materias_selecionadas:
+            conn.close()
+            return render_template("novo_curso.html", Curso=curso, Materias=materias,
+                Modo="editar", Mensagem="Selecione pelo menos uma matéria.")
+
+        cursor.execute("""
+            UPDATE curso
+            SET nome = ?, descricao = ?
+            WHERE id_curso = ?
+        """, (nome, descricao, id_curso))
+
+        cursor.execute(
+            "DELETE FROM curso_materia WHERE id_curso = ?",
+            (id_curso,))
+
+        for id_materia in materias_selecionadas:
+            cursor.execute("""
+                INSERT INTO curso_materia (id_curso, id_materia)
+                VALUES (?, ?)
+            """, (id_curso, id_materia))
+
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("cursos"))
+
+    cursor.execute("""
+        SELECT id_materia
+        FROM curso_materia
+        WHERE id_curso = ?
+    """, (id_curso,))
+
+    materias_do_curso = [linha[0] for linha in cursor.fetchall()]
+
+    conn.close()
+
+    return render_template("novo_curso.html", Curso=curso, Materias=materias,
+                            MateriasDoCurso=materias_do_curso, Modo="editar")
 
 # ==============================================================================
 
