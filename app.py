@@ -137,13 +137,31 @@ def novo_aluno() -> str:
 
     _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
+    _ = cursor.execute("SELECT id_curso, nome FROM curso")
+    
+    cursos = cursor.fetchall()
+
     if request.method == "POST":
         nome = request.form["nome"].strip()
         email = request.form["email"].strip()
         telefone = request.form["telefone"].strip()
         data_nascimento = request.form["data-nascimento"]
-        id_curso = request.form["curso"]
 
+        try:
+            id_curso = int(request.form["curso"])
+        except (KeyError, TypeError, ValueError):
+            conn.close()
+            return render_template( "novo_aluno.html", Cursos=cursos, 
+                                   Mensagem="Selecione um curso válido.")
+
+        cursor.execute("SELECT 1 FROM curso WHERE id_curso = ?", 
+                       (id_curso,))
+
+        if cursor.fetchone() is None:
+            conn.close()
+            return render_template("novo_aluno.html", Cursos=cursos,
+                                    Mensagem="O curso selecionado não existe.")
+        
         _ = cursor.execute('''
         INSERT INTO aluno (nome, email, telefone, data_nascimento)
         VALUES (?, ?, ?, ?)
@@ -151,20 +169,32 @@ def novo_aluno() -> str:
 
         matricula = cursor.lastrowid
 
-        _ = cursor.execute('''
-        INSERT INTO aluno_curso (id_curso, matricula_aluno)
-        VALUES (?, ?)
-        ''', (id_curso, matricula))
+        try:
+            cursor.execute("""
+                INSERT INTO aluno (nome, email, telefone, data_nascimento)
+                VALUES (?, ?, ?, ?)
+            """, (nome, email, telefone, data_nascimento))
 
-        conn.commit()
+            matricula = cursor.lastrowid
+
+            cursor.execute("""
+                INSERT INTO aluno_curso (id_curso, matricula_aluno)
+                VALUES (?, ?)
+            """, (id_curso, matricula))
+
+            conn.commit()
+
+        except sqlite3.IntegrityError as erro:
+            conn.rollback()
+            conn.close()
+
+            return render_template("novo_aluno.html", Cursos=cursos,
+                Mensagem=f"Erro ao cadastrar aluno: {erro}")
+
         conn.close()
 
         return render_template("novo_aluno.html",
-                               Mensagem="Aluno cadastrado com sucesso!")
-
-    _ = cursor.execute("SELECT id_curso, nome FROM curso")
-
-    cursos = cursor.fetchall()
+                               Mensagem="Aluno cadastrado com sucesso!", Cursos=cursos)
 
     conn.close()
 
@@ -432,11 +462,16 @@ def novo_curso() -> str:
 
         id_curso = cursor.lastrowid
 
-        for id_materia in materias:
-            _ = cursor.execute("""
-            INSERT INTO curso_materia (id_curso, id_materia)
-            VALUES (?, ?)
-            """, (id_curso, id_materia))
+        if materias != None and len(materias) > 0:
+            for id_materia in materias:
+                _ = cursor.execute("""
+                INSERT INTO curso_materia (id_curso, id_materia)
+                VALUES (?, ?)
+                """, (id_curso, id_materia))
+        else:
+                conn.close()
+                return render_template('novo_curso.html', 
+                                        Mensagem="Selecione pelo menos uma matéria.")
         
         conn.commit()
         conn.close()

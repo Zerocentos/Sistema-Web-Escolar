@@ -14,7 +14,7 @@ def tabela_aluno() -> str:
     CREATE TABLE IF NOT EXISTS aluno(
         matricula INTEGER PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(60) NOT NULL CHECK (LENGTH(nome) <= 60), 
-        email VARCHAR(40) NOT NULL UNIQUE,
+        email VARCHAR(40) NOT NULL,
         telefone VARCHAR(30) NOT NULL,
         data_nascimento DATETIME
     )
@@ -47,7 +47,7 @@ def tabela_professor() -> str:
     CREATE TABLE IF NOT EXISTS professor(
         id_professor INTEGER PRIMARY KEY AUTOINCREMENT,
         nome VARCHAR(60) NOT NULL CHECK (LENGTH(nome) <= 60), 
-        email VARCHAR(40) NOT NULL UNIQUE,
+        email VARCHAR(40) NOT NULL,
         telefone VARCHAR(30) NOT NULL,
         data_nascimento DATETIME
     )
