@@ -63,6 +63,21 @@
     color: var(--bg-alt-hover); /* cor do texto */
 }
 
+#professores .botao-edicao {
+  color: var(--fg);
+  background-color: var(--bg);
+  text-decoration: none;
+  border-radius: 0.50rem;
+  transition: background 0.10s;
+  padding: 0.50rem 1.00rem;
+}
+
+#professores .botao-edicao:hover {
+  color: var(--fg);
+  background-color: var(--bg-hover);
+  text-decoration: none;
+}
+
 #professores #tabela-professores {
   width: 100%;
   margin-top: 1.5rem;
