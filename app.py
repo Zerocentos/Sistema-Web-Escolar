@@ -28,6 +28,8 @@ def aluno_com_matricula(matricula: int):
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor() 
 
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
+
     _ = cursor.execute("""
     SELECT * FROM aluno
     WHERE matricula = ?
@@ -46,12 +48,16 @@ def aluno_com_matricula(matricula: int):
 
     aluno.append(nome_curso)
 
+    conn.close()
+
     return aluno
 
 @app.route("/alunos/<int:matricula>/")
 def aluno(matricula: int) -> str:   
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor() 
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     aluno = aluno_com_matricula(matricula)
 
@@ -82,6 +88,8 @@ def aluno_nova_nota(matricula) -> str:
         conn = sqlite3.connect(BANCO_DE_DADOS)
         cursor = conn.cursor()
 
+        _ = cursor.execute(" PRAGMA foreign_keys = ON ")
+
         _ = cursor.execute("SELECT id_materia, nome FROM materia")
 
         materias = cursor.fetchall()
@@ -95,6 +103,8 @@ def aluno_nova_nota(matricula) -> str:
 def alunos() -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     alunos: list[list[str]] = list(map(
         list, cursor.execute("SELECT matricula, nome, data_nascimento FROM aluno").fetchall()
@@ -124,6 +134,8 @@ def alunos() -> str:
 def novo_aluno() -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     if request.method == "POST":
         nome = request.form["nome"].strip()
@@ -166,6 +178,8 @@ def professor(id_professor: int) -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor() 
 
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
+
     _ = cursor.execute("""
     SELECT * FROM professor
     WHERE id_professor = ?
@@ -192,6 +206,8 @@ def professor(id_professor: int) -> str:
 def professores() -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     professores: list[list[str]] = list(map(
         list, cursor.execute("""
@@ -220,6 +236,8 @@ def professores() -> str:
 def novo_professor() -> str:  
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     _ = cursor.execute("SELECT id_materia, nome FROM materia")
     
@@ -259,6 +277,8 @@ def excluir_professor(id_professor: int):
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
 
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
+
     _ = cursor.execute(""" DELETE FROM professor
                         WHERE id_professor = ? """, 
                         (id_professor,))
@@ -272,6 +292,8 @@ def excluir_professor(id_professor: int):
 def editar_professor(id_professor: int):
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     if request.method == "POST":
         nome = request.form["nome"].strip()
@@ -340,6 +362,8 @@ def nova_materia() -> str:
 
         conn = sqlite3.connect(BANCO_DE_DADOS)
         cursor = conn.cursor()
+
+        _ = cursor.execute(" PRAGMA foreign_keys = ON ")
         
         _ = cursor.execute(
             "INSERT INTO materia (nome, carga_horaria) VALUES (?, ?)",
@@ -362,6 +386,8 @@ def nova_materia() -> str:
 def cursos() -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
+
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
 
     _ = cursor.execute("""
     SELECT id_curso, nome, descricao FROM curso
@@ -396,6 +422,8 @@ def novo_curso() -> str:
 
         conn = sqlite3.connect(BANCO_DE_DADOS)
         cursor = conn.cursor()
+
+        _ = cursor.execute(" PRAGMA foreign_keys = ON ")
         
         _ = cursor.execute(
             "INSERT INTO curso (nome, descricao) VALUES (?, ?)",
@@ -420,6 +448,8 @@ def novo_curso() -> str:
     conn = sqlite3.connect(BANCO_DE_DADOS)
     cursor = conn.cursor()
 
+    _ = cursor.execute(" PRAGMA foreign_keys = ON ")
+    
     _ = cursor.execute("SELECT id_materia, nome FROM materia")
 
     materias = cursor.fetchall()
