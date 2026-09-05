@@ -430,13 +430,13 @@ def novo_curso() -> str:
             (nome, descricao)
         ) 
 
-        id = cursor.lastrowid
+        id_curso = cursor.lastrowid
 
         for id_materia in materias:
             _ = cursor.execute("""
             INSERT INTO curso_materia (id_curso, id_materia)
             VALUES (?, ?)
-            """, (id, id_materia))
+            """, (id_curso, id_materia))
         
         conn.commit()
         conn.close()
@@ -449,7 +449,7 @@ def novo_curso() -> str:
     cursor = conn.cursor()
 
     _ = cursor.execute(" PRAGMA foreign_keys = ON ")
-    
+
     _ = cursor.execute("SELECT id_materia, nome FROM materia")
 
     materias = cursor.fetchall()
